@@ -1,0 +1,78 @@
+<Project DefaultTargets="All" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Build Properties -->
+
+  <PropertyGroup>
+    <BuildType Condition="'$(BuildType)'==''">Release</BuildType>
+    <ForcedBuildProperties>Configuration=$(BuildType)</ForcedBuildProperties>
+  </PropertyGroup>
+
+  <!-- Path Properties -->
+
+  <PropertyGroup>
+    <BinPath>..\bin</BinPath>
+    <LibPath>..\lib</LibPath>
+    <ToolsPath>..\tools</ToolsPath>
+    <SrcPath>.</SrcPath>
+    <SolutionName>AK.CmdLine</SolutionName>
+    <SolutionPath>$(SrcPath)\$(SolutionName).sln</SolutionPath>
+    <GlobalAssemblyInfoPath>$(SrcPath)\GlobalAssemblyInfo.cs</GlobalAssemblyInfoPath>
+    <XUnitTasksPath>$(ToolsPath)\xunit</XUnitTasksPath>
+    <CoreBinPath>$(SrcPath)\AK.CmdLine\bin\$(BuildType)</CoreBinPath>
+  </PropertyGroup>
+
+  <Import Project="$(XUnitTasksPath)\XUnit.tasks"/>
+
+  <!-- Targets -->
+
+  <Target Name="All" DependsOnTargets="Clean;Build;Test;Package"/>
+
+  <Target Name="Clean">
+    <CreateItem Include="$(SrcPath)\*.Test.Results.xml">
+      <Output TaskParameter="Include" ItemName="CleanFileList"/>
+    </CreateItem>
+    <Delete
+      Files="@(CleanFileList)"/>
+    <RemoveDir
+      Directories="$(BinPath)"
+      Condition="Exists('$(BinPath)')"/>
+    <MakeDir
+      Directories="$(BinPath)"/>
+    <MSBuild
+      Projects="$(SolutionPath)"
+      Targets="Clean"
+      Properties="$(ForcedBuildProperties)"/>
+  </Target>
+
+  <Target Name="Build">
+    <MSBuild
+      Projects="$(SolutionPath)"
+      Targets="Build"
+      Properties="$(ForcedBuildProperties)"/>
+  </Target>
+
+  <Target Name="Test" DependsOnTargets="Build">
+    <XunitProject ProjectFile="$(SrcPath)\$(SolutionName).$(BuildType).xunit"/>
+  </Target>
+
+  <Target Name="Package" DependsOnTargets="Build;Test">
+    <PropertyGroup>
+      <PackageName>$(SolutionName)</PackageName>
+      <PackagePath>$(BinPath)</PackagePath>
+    </PropertyGroup>
+    <ItemGroup>
+      <PackageRootFiles
+        Include="$(CoreBinPath)\*.*;$(CmdLineBinPath)\*.*"/>
+    </ItemGroup>
+    <MakeDir
+      Directories="$(PackagePath)"/>
+    <Copy
+      SourceFiles="@(PackageRootFiles)"
+      DestinationFolder="$(PackagePath)"/>
+    <ItemGroup>
+      <PackageFiles
+        Include="$(PackagePath)\**\*.*"/>
+    </ItemGroup>
+  </Target>
+
+</Project>
