@@ -48,6 +48,16 @@ namespace AK.CmdLine.Impl
         #region Protected Interface.
 
         /// <summary>
+        /// Gets a descripton of the specified component.
+        /// </summary>
+        /// <returns>A descripton of the component.</returns>
+        protected override string GetComponentDescription()
+        {
+            var summary = GetMemberSummaryValue(MakeComponentMemberName());
+            return !String.IsNullOrWhiteSpace(summary) ? summary : base.GetComponentDescription();
+        }
+
+        /// <summary>
         /// Gets a descripton of the specified <paramref name="method"/>.
         /// </summary>
         /// <param name="method">The <see cref="AK.CmdLine.Impl.MethodDescriptor"/>.</param>
@@ -56,12 +66,8 @@ namespace AK.CmdLine.Impl
         /// </returns>
         protected override string GetDescription(MethodDescriptor method)
         {
-            var element = GetElement(method);
-            if(element != null && (element = element.Element("summary")) != null)
-            {
-                return ToString(element);
-            }
-            return base.GetDescription(method);
+            var summary = GetMemberSummaryValue(MakeMethodMemberName(method));
+            return !String.IsNullOrWhiteSpace(summary) ? summary : base.GetDescription(method);
         }
 
         /// <summary>
@@ -73,13 +79,13 @@ namespace AK.CmdLine.Impl
         /// </returns>
         protected override string GetDescription(ParameterDescriptor parameter)
         {
-            var element = GetElement(parameter.Method);
+            var element = GetMember(MakeMethodMemberName(parameter.Method));
             if(element != null)
             {
                 element = element.Elements("param")
                     .Where(x => x.Attribute("name").Value.Equals(parameter.Name))
                     .SingleOrDefault();
-                if(element != null)
+                if(element != null && !String.IsNullOrWhiteSpace(element.Value))
                 {
                     return ToString(element);
                 }
@@ -118,14 +124,18 @@ namespace AK.CmdLine.Impl
                 Path.GetFileNameWithoutExtension(location) + ".xml");
         }
 
-        private XElement GetElement(MethodDescriptor method)
+        private XElement GetMember(string name)
         {
-            var xmlName = GetXmlName(method);
-            return Members.Where(x => x.Attribute("name").Value.Equals(xmlName))
-                .SingleOrDefault();
+            return Members.Where(x => x.Attribute("name").Value.Equals(name)).SingleOrDefault();
         }
 
-        private string GetXmlName(MethodDescriptor method)
+        private string GetMemberSummaryValue(string name)
+        {
+            var member = GetMember(name);
+            return member != null ? ToString(member.Element("summary")) : null;
+        }
+
+        private string MakeMethodMemberName(MethodDescriptor method)
         {
             var name = new StringBuilder();
             name.Append("M:").Append(Component.ComponentType.FullName).Append(".").Append(method.Name);
@@ -141,7 +151,7 @@ namespace AK.CmdLine.Impl
             return name.ToString();
         }
 
-        private string GetComponentXmlName()
+        private string MakeComponentMemberName()
         {
             return "T:" + Component.ComponentType.FullName;
         }
