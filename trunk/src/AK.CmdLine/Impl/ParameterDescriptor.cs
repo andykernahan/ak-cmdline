@@ -51,13 +51,8 @@ namespace AK.CmdLine.Impl
             }
             else if(parameter.ParameterType.IsArray)
             {
-                if(GetAttribute<ParamArrayAttribute>() == null)
-                {
-                    throw Guard.ParameterDescriptor_OnlyParamArraysAreSupported(method.Method, parameter);
-                }
-                IsParams = true;
-                IsOptional = true;
                 DefaultValue = Array.CreateInstance(parameter.ParameterType.GetElementType(), 0);
+                IsOptional = IsParams = GetAttribute<ParamArrayAttribute>() != null;
             }
         }
 
