@@ -14,6 +14,6 @@
 
 using System.Reflection;
 
-[assembly: AssemblyTitle("Command Line Utility Test for .NET 4.0")]
-[assembly: AssemblyDescription("Command Line Utility Test Library for .NET 4.0")]
+[assembly: AssemblyTitle("Command Line Processing Test Library for .NET 4.0")]
+[assembly: AssemblyDescription("Command Line Processing Test Library for .NET 4.0")]
 [assembly: AssemblyProduct("AK.CmdLine.Test")]

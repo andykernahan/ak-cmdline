@@ -16,7 +16,7 @@ using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-[assembly: AssemblyTitle("Command Line Utility for .NET 4.0")]
+[assembly: AssemblyTitle("Command Line Processing Library for .NET 4.0")]
 [assembly: AssemblyDescription("Command Line Processing Library for .NET 4.0")]
 [assembly: AssemblyProduct("AK.CmdLine")]
 [assembly: CLSCompliant(true)]
