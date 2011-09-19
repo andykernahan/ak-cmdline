@@ -103,6 +103,18 @@ namespace AK.CmdLine
             AssertInvoked(
                 x => x.Diff("1", "2", "3"),
                 "Diff", "1", "2", "3");
+
+            AssertInvoked(
+                x => x.Resolve("accept"),
+                "Resolve", "accept");
+
+            AssertInvoked(
+                x => x.Resolve("accept", "1"),
+                "Resolve", "accept", "1");
+
+            AssertInvoked(
+                x => x.Resolve("accept", "1", "2", "3"),
+                "Resolve", "accept", "1", "2", "3");
         }
 
         [Fact]
@@ -246,6 +258,11 @@ namespace AK.CmdLine
             }
 
             public virtual void Diff(params string[] files)
+            {
+                ShouldBeMockedOut();
+            }
+
+            public virtual void Resolve(string accept, params string[] files)
             {
                 ShouldBeMockedOut();
             }
