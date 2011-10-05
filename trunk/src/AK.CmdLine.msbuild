@@ -51,7 +51,7 @@
       Targets="Clean"
       Properties="$(ForcedBuildProperties)"/>
   </Target>
-  
+
   <Target Name="SetAssemblyVersion" Condition="'$(BuildNumber)' != '0'">
     <RegexReplace
       Pattern="AssemblyVersion\(&quot;.*&quot;\)"
@@ -76,12 +76,12 @@
 
   <Target Name="Package" DependsOnTargets="Build;Test">
     <PropertyGroup>
-      <PackageName>$(SolutionName)</PackageName>
-      <PackagePath>$(BinPath)</PackagePath>
+      <PackageName>ak-cmdline</PackageName>
+      <PackagePath>$(BinPath)\latest-$(PackageName)</PackagePath>
     </PropertyGroup>
     <ItemGroup>
       <PackageRootFiles
-        Include="$(CoreBinPath)\*.*;$(CmdLineBinPath)\*.*"/>
+        Include="$(CoreBinPath)\*.*"/>
     </ItemGroup>
     <MakeDir
       Directories="$(PackagePath)"/>
@@ -92,6 +92,12 @@
       <PackageFiles
         Include="$(PackagePath)\**\*.*"/>
     </ItemGroup>
+    <Zip
+      Files="@(PackageFiles)"
+      ZipFileName="$(BinPath)\$(PackageName)-v$(GlobalAssemblyVersion).zip"
+      WorkingDirectory="$(PackagePath)"
+      Flatten="false"
+      ZipLevel="10"/>
   </Target>
 
 </Project>
