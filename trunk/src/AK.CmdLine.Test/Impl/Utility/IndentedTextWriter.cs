@@ -94,6 +94,21 @@ namespace AK.CmdLine.Impl.Utility
         }
 
         [Fact]
+        public void indent_length_reflects_length_of_indent()
+        {
+            var writer = new IndentedTextWriter(TextWriter.Null);
+
+            Assert.Equal(writer.IndentString.Length * writer.IndentLevel, writer.IndentLength);
+            using (writer.PushIndent(5))
+            {
+                Assert.Equal(writer.IndentString.Length * writer.IndentLevel, writer.IndentLength);
+            }
+
+            writer.IndentString = null;
+            Assert.Equal(0, writer.IndentLength);
+        }
+
+        [Fact]
         public void close_calls_inner()
         {
             AssertInnerCall(x => x.Close(), x => x.Close());

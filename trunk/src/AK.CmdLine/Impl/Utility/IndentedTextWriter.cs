@@ -609,6 +609,14 @@ namespace AK.CmdLine.Impl.Utility
         }
 
         /// <summary>
+        /// Gets the length of the indent string given the current indent level.
+        /// </summary>
+        public int IndentLength
+        {
+            get { return String.IsNullOrEmpty(IndentString) ? 0 : IndentLevel * IndentString.Length; }
+        }
+
+        /// <summary>
         /// Gets or sets the line terminator string used by the current TextWriter.
         /// </summary>
         /// <value></value>
@@ -629,7 +637,7 @@ namespace AK.CmdLine.Impl.Utility
         /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
         protected override void Dispose(bool disposing)
         {
-            if(disposing)
+            if (disposing)
             {
                 Inner.Dispose();
             }
@@ -641,9 +649,9 @@ namespace AK.CmdLine.Impl.Utility
         /// </summary>
         protected void WriteIndent()
         {
-            if(IsIndentPending)
+            if (IsIndentPending)
             {
-                for(int i = 0; i < IndentLevel; ++i)
+                for (int i = 0; i < IndentLevel; ++i)
                 {
                     Inner.Write(IndentString);
                 }
@@ -696,7 +704,7 @@ namespace AK.CmdLine.Impl.Utility
 
             public void Dispose()
             {
-                if(!_isDisposed)
+                if (!_isDisposed)
                 {
                     _isDisposed = true;
                     _writer.IndentLevel -= _indent;

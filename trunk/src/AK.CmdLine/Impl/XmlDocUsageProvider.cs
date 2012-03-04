@@ -19,6 +19,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace AK.CmdLine.Impl
@@ -80,12 +81,12 @@ namespace AK.CmdLine.Impl
         protected override string GetDescription(ParameterDescriptor parameter)
         {
             var element = GetMember(MakeMethodMemberName(parameter.Method));
-            if(element != null)
+            if (element != null)
             {
                 element = element.Elements("param")
                     .Where(x => x.Attribute("name").Value.Equals(parameter.Name))
                     .SingleOrDefault();
-                if(element != null && !String.IsNullOrWhiteSpace(element.Value))
+                if (element != null && !String.IsNullOrWhiteSpace(element.Value))
                 {
                     return ToString(element);
                 }
@@ -108,7 +109,7 @@ namespace AK.CmdLine.Impl
                     .Elements()
                     .ToList();
             }
-            catch(FileNotFoundException)
+            catch (FileNotFoundException)
             {
                 Trace.WriteLine(String.Format(CultureInfo.CurrentCulture,
                     "{0}: no xml docs found at path '{1}'",
@@ -139,10 +140,10 @@ namespace AK.CmdLine.Impl
         {
             var name = new StringBuilder();
             name.Append("M:").Append(Component.ComponentType.FullName).Append(".").Append(method.Name);
-            if(method.Parameters.Count > 0)
+            if (method.Parameters.Count > 0)
             {
                 name.Append('(');
-                foreach(var parameter in method.Parameters)
+                foreach (var parameter in method.Parameters)
                 {
                     name.Append(parameter.ParameterType.FullName).Append(',');
                 }
@@ -158,7 +159,7 @@ namespace AK.CmdLine.Impl
 
         private static string ToString(XElement element)
         {
-            return element.Value.Trim();
+            return Regex.Replace(element.Value, @"\s+", " ").Trim();
         }
 
         private XDocument Document { get; set; }
