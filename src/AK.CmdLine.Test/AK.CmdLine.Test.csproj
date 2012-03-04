@@ -75,6 +75,7 @@
     <Compile Include="Impl\SwitchTest.cs" />
     <Compile Include="Impl\MethodDescriptorTest.cs" />
     <Compile Include="Impl\DescriptorBaseTest.cs" />
+    <Compile Include="Impl\Utility\StringBreakerTest.cs" />
     <Compile Include="ShortNameAttributeTest.cs" />
     <Compile Include="Impl\ParameterDescriptorTest.cs" />
     <Compile Include="Impl\Utility\IndentedTextWriter.cs" />

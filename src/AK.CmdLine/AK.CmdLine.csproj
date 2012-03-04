@@ -65,6 +65,7 @@
     <Compile Include="Impl\IUsageWriter.cs" />
     <Compile Include="Impl\MethodDescriptor.cs" />
     <Compile Include="Impl\DescriptorBase.cs" />
+    <Compile Include="Impl\Utility\StringBreaker.cs" />
     <Compile Include="Impl\XmlDocUsageProvider.cs" />
     <Compile Include="ShortNameAttribute.cs" />
     <Compile Include="Guard.cs" />

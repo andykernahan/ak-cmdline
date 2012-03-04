@@ -218,7 +218,7 @@ namespace AK.CmdLine.Impl
         /// </summary>
         protected virtual void WriteMethodList()
         {
-            foreach(var method in Component.Methods)
+            foreach (var method in Component.Methods)
             {
                 WriteMethod(method);
             }
@@ -231,12 +231,12 @@ namespace AK.CmdLine.Impl
         protected virtual void WriteMethod(MethodDescriptor method)
         {
             WriteMethodSignature(method);
-            using(Output.PushIndent(2))
+            using (Output.PushIndent(2))
             {
                 WriteMethodDescription(method);
-                if(method.Parameters.Count > 0)
+                if (method.Parameters.Count > 0)
                 {
-                    using(Output.PushIndent(4))
+                    using (Output.PushIndent(5))
                     {
                         WriteParameterList(method);
                     }
@@ -252,7 +252,7 @@ namespace AK.CmdLine.Impl
         protected virtual void WriteMethodSignature(MethodDescriptor method)
         {
             WriteName(method);
-            foreach(var parameter in method.Parameters)
+            foreach (var parameter in method.Parameters)
             {
                 Output.Write(' ');
                 WriteParameterSignature(parameter);
@@ -267,11 +267,11 @@ namespace AK.CmdLine.Impl
         protected virtual void WriteParameterSignature(ParameterDescriptor parameter)
         {
             // TODO perhaps default should be in the parameter list instead?
-            if(parameter.IsOptional)
+            if (parameter.IsOptional)
             {
                 Output.Write('[');
                 WriteName(parameter);
-                if(!parameter.IsBoolean)
+                if (!parameter.IsBoolean)
                 {
                     Output.Write('=');
                 }
@@ -303,7 +303,8 @@ namespace AK.CmdLine.Impl
         /// <param name="method">The <see cref="AK.CmdLine.Impl.MethodDescriptor"/>.</param>
         protected virtual void WriteMethodDescription(MethodDescriptor method)
         {
-            Output.WriteLine("- {0}", GetDescription(method));
+            Output.Write("- ");
+            WriteBrokenString(3, GetDescription(method));
         }
 
         /// <summary>
@@ -329,12 +330,12 @@ namespace AK.CmdLine.Impl
                 Name = x.IsBoolean ? x.Name + "[+|-]" : x.Name
             }).ToList();
             var widestName = parameters.Max(x => x.Name.Length);
-            foreach(var parameter in parameters)
+            foreach (var parameter in parameters)
             {
-                Output.WriteLine("--{0}{1}  {2}",
+                Output.Write("--{0}{1}  ",
                     parameter.Name,
-                    ":".PadRight(1 + widestName - parameter.Name.Length, ' '),
-                    parameter.Description);
+                    ":".PadRight(1 + widestName - parameter.Name.Length, ' '));
+                WriteBrokenString(2 + 1 + widestName + 2, parameter.Description);
             }
         }
 
@@ -356,7 +357,7 @@ namespace AK.CmdLine.Impl
         {
             Output.Write("--");
             Output.Write(parameter.Name);
-            if(parameter.ShortName.Length > 0)
+            if (parameter.ShortName.Length > 0)
             {
                 Output.Write("[-{0}]", parameter.ShortName);
             }
@@ -369,7 +370,7 @@ namespace AK.CmdLine.Impl
         protected virtual void WriteName(MethodDescriptor method)
         {
             Output.Write(method.Name);
-            if(method.ShortName.Length > 0)
+            if (method.ShortName.Length > 0)
             {
                 Output.Write("[{0}]", method.ShortName);
             }
@@ -395,9 +396,34 @@ namespace AK.CmdLine.Impl
 
         #region Private Impl.
 
+        /// <summary>
+        /// Writes a broken string.
+        /// </summary>
+        /// <param name="currentLineLength">The length of the current line.</param>
+        /// <param name="s">The string to write.</param>
+        private void WriteBrokenString(int currentLineLength, string s)
+        {
+            bool firstSegment = false;
+            foreach (var segment in new StringBreaker(s, 88 - currentLineLength - Output.IndentLength))
+            {
+                if (firstSegment)
+                {
+                    Output.WriteLine(segment);
+                    firstSegment = false;
+                }
+                else
+                {
+                    using (Output.PushIndent(currentLineLength))
+                    {
+                        Output.WriteLine(segment);
+                    }
+                }
+            }
+        }
+
         private void WriteMessage(string message, params object[] args)
         {
-            if(!String.IsNullOrEmpty(message))
+            if (!String.IsNullOrEmpty(message))
             {
                 Output.WriteLine(message, args);
                 Output.WriteLine();
