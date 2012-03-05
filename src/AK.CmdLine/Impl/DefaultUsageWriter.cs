@@ -304,7 +304,7 @@ namespace AK.CmdLine.Impl
         protected virtual void WriteMethodDescription(MethodDescriptor method)
         {
             Output.Write("- ");
-            WriteBrokenString(3, GetDescription(method));
+            WriteWrappedString(3, GetDescription(method));
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace AK.CmdLine.Impl
                 Output.Write("--{0}{1}  ",
                     parameter.Name,
                     ":".PadRight(1 + widestName - parameter.Name.Length, ' '));
-                WriteBrokenString(2 + 1 + widestName + 2, parameter.Description);
+                WriteWrappedString(2 + 1 + widestName + 2, parameter.Description);
             }
         }
 
@@ -397,13 +397,13 @@ namespace AK.CmdLine.Impl
         #region Private Impl.
 
         /// <summary>
-        /// Writes a broken string.
+        /// Writes a wrapped string.
         /// </summary>
         /// <param name="currentLineLength">The length of the current line.</param>
         /// <param name="s">The string to write.</param>
-        private void WriteBrokenString(int currentLineLength, string s)
+        private void WriteWrappedString(int currentLineLength, string s)
         {
-            bool firstSegment = false;
+            bool firstSegment = true;
             foreach (var segment in new StringBreaker(s, 88 - currentLineLength - Output.IndentLength))
             {
                 if (firstSegment)
