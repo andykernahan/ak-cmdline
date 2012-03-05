@@ -304,7 +304,7 @@ namespace AK.CmdLine.Impl
         protected virtual void WriteMethodDescription(MethodDescriptor method)
         {
             Output.Write("- ");
-            WriteWrappedString(3, GetDescription(method));
+            WriteWrappedString(2, GetDescription(method));
         }
 
         /// <summary>
