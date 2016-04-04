@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>AK.CmdLine</id>
+        <version>1.0.0</version>
+        <authors>Andy Kernahan</authors>
+        <projectUrl>https://github.com/andykernahan/ak-cmdline</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Command Line Parser Library for .NET.</description>
+    </metadata>
+    <files>
+        <file src="..\bin\latest-ak-cmdline\AK.CmdLine.xml" target="content\AK.CmdLine.xml" />
+        <file src="..\bin\latest-ak-cmdline\AK.CmdLine.dll" target="lib\net40\AK.CmdLine.dll" />
+        <file src="..\bin\latest-ak-cmdline\AK.CmdLine.pdb" target="lib\net40\AK.CmdLine.pdb" />
+    </files>
+</package>
