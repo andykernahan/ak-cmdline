@@ -3,10 +3,10 @@ if "%1" == "" goto BuildDefault
 goto BuildTarget
 
 :BuildDefault
-%windir%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe src\AK.CmdLine.msbuild /p:Configuration=Release;BuildType=Release /t:All
+"%PROGRAMFILES(X86)%\MSBuild\14.0\Bin\MsBuild.exe" src\AK.CmdLine.msbuild /p:Configuration=Release;BuildType=Release /t:All
 goto End
 
 :BuildTarget
-%windir%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe src\AK.CmdLine.msbuild /p:Configuration=Release;BuildType=Release /t:%*
+"%PROGRAMFILES(X86)%\MSBuild\14.0\Bin\MsBuild.exe" src\AK.CmdLine.msbuild /p:Configuration=Release;BuildType=Release /t:%*
 
 :End
