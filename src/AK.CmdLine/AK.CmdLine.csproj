@@ -55,8 +55,10 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CmdLine.cs" />
     <Compile Include="CmdLineDriver.cs" />
     <Compile Include="CmdLineCancelKey.cs" />
+    <Compile Include="CmdLineExitWaitHandle.cs" />
     <Compile Include="Impl\ComponentDescriptor.cs" />
     <Compile Include="Impl\DefaultValueConverter.cs" />
     <Compile Include="Impl\IValueConverter.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="Impl\DescriptorBase.cs" />
     <Compile Include="Impl\Utility\StringBreaker.cs" />
     <Compile Include="Impl\XmlDocUsageProvider.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="ShortNameAttribute.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Impl\ParameterDescriptor.cs" />
