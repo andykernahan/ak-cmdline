@@ -1,7 +1,12 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3524028D-F803-4E99-83F0-5D89A5C7F9F8}"
+	ProjectSection(SolutionItems) = preProject
+		AK.CmdLine.nuspec = AK.CmdLine.nuspec
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AK.CmdLine", "AK.CmdLine\AK.CmdLine.csproj", "{2AB3FF0E-89E7-47A8-A46D-B98F7A520351}"
 EndProject
