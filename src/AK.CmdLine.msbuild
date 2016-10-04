@@ -4,11 +4,7 @@
 
   <PropertyGroup>
     <BuildType Condition="'$(BuildType)'==''">Debug</BuildType>
-    <BuildNumber>$(BUILD_NUMBER)</BuildNumber>
-    <BuildNumber Condition="'$(BuildNumber)'==''">0</BuildNumber>
-    <BuildRevision>$(BUILD_VCS_NUMBER)</BuildRevision>
-    <BuildRevision Condition="'$(BuildRevision)'==''">0</BuildRevision>
-    <GlobalAssemblyVersion>1.1.$(BuildRevision).$(BuildNumber)</GlobalAssemblyVersion>
+    <GlobalAssemblyVersion>1.1.1</GlobalAssemblyVersion>
     <ForcedBuildProperties>Configuration=$(BuildType)</ForcedBuildProperties>
   </PropertyGroup>
 

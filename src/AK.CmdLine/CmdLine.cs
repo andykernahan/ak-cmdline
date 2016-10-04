@@ -50,17 +50,17 @@ namespace AK.CmdLine
         {
             Guard.NotNull(action, nameof(action));
 
+            lock (_syncRoot)
+            {
+                if (_ran)
+                {
+                    throw new InvalidOperationException("The command has already been specified.");
+                }
+                _ran = true;
+            }
             try
             {
                 _canExit.Reset();
-                lock (_syncRoot)
-                {
-                    if (_ran)
-                    {
-                        throw new InvalidOperationException("The command has already been specified.");
-                    }
-                    _ran = true;
-                }
                 action(CmdLineExitWaitHandle.CopyFrom(_exit));
             }
             finally
