@@ -139,13 +139,16 @@ namespace AK.CmdLine.Impl
         private string MakeMethodMemberName(MethodDescriptor method)
         {
             var name = new StringBuilder();
-            name.Append("M:").Append(Component.ComponentType.FullName).Append(".").Append(method.Name);
+            name.Append("M:");
+            FormatFullName(Component.ComponentType, name);
+            name.Append(".").Append(method.Name);
             if (method.Parameters.Count > 0)
             {
                 name.Append('(');
                 foreach (var parameter in method.Parameters)
                 {
-                    name.Append(parameter.ParameterType.FullName).Append(',');
+                    FormatFullName(parameter.ParameterType, name);
+                    name.Append(',');
                 }
                 name[name.Length - 1] = ')';
             }
@@ -154,7 +157,26 @@ namespace AK.CmdLine.Impl
 
         private string MakeComponentMemberName()
         {
-            return "T:" + Component.ComponentType.FullName;
+            var name = new StringBuilder();
+            name.Append("T:");
+            FormatFullName(Component.ComponentType, name);
+            return name.ToString();
+        }
+
+        private static void FormatFullName(Type type, StringBuilder name)
+        {
+            if (!type.IsGenericType)
+            {
+                name.Append(type.FullName);
+                return;
+            }
+            name.Append(type.FullName, 0, type.FullName.IndexOf('`')).Append('{');
+            foreach (var genericArgument in type.GetGenericArguments())
+            {
+                FormatFullName(genericArgument, name);
+                name.Append(',');
+            }
+            name[name.Length - 1] = '}';
         }
 
         private static string ToString(XElement element)
