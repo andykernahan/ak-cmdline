@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace AK.CmdLine.Impl
 {
@@ -25,6 +26,12 @@ namespace AK.CmdLine.Impl
     [Serializable]
     public sealed class MethodDescriptor : DescriptorBase
     {
+        #region Fields.
+
+        private readonly MethodInvoker _methodInvoker;
+
+        #endregion
+
         #region Public Interface.
 
         /// <summary>
@@ -47,6 +54,7 @@ namespace AK.CmdLine.Impl
             Component = component;
             Method = method;
             Parameters = CreateParameterDescriptors();
+            _methodInvoker = MethodInvoker.Create(method);
         }
 
         /// <summary>
@@ -75,7 +83,7 @@ namespace AK.CmdLine.Impl
         /// </exception>
         public object Invoke(object component, object[] parameters)
         {
-            return Method.Invoke(component, parameters);
+            return _methodInvoker.Invoke(component, parameters);
         }
 
         /// <summary>
@@ -149,6 +157,103 @@ namespace AK.CmdLine.Impl
                 descriptors.Add(descriptor);
             }
             return descriptors.AsReadOnly();
+        }
+
+        private abstract class MethodInvoker
+        {
+            public object Invoke(object component, object[] parameters)
+            {
+                try
+                {
+                    return InvokeCore(component, parameters);
+                }
+                catch (AggregateException e)
+                {
+                    var flat = e.Flatten();
+                    if (flat.InnerExceptions.Count == 1)
+                    {
+                        throw new TargetInvocationException(flat.Message, flat.InnerExceptions[0]);
+                    }
+                    throw new TargetInvocationException(e.Message, e);
+                }
+            }
+
+            protected abstract object InvokeCore(object component, object[] parameters);
+
+            public static MethodInvoker Create(MethodInfo method)
+            {
+                if (!typeof(Task).IsAssignableFrom(method.ReturnType))
+                {
+                    return new Sync(method);
+                }
+                for (var type = method.ReturnType; type != typeof(Task); type = type.BaseType)
+                {
+                    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Task<>))
+                    {
+                        var asyncType = typeof(Async<>).MakeGenericType(type.GetGenericArguments()[0]);
+                        return (MethodInvoker)Activator.CreateInstance(asyncType, method);
+                    }
+                }
+                return new Async(method);
+            }
+
+            private sealed class Sync : MethodInvoker
+            {
+                private readonly MethodInfo _method;
+
+                public Sync(MethodInfo method)
+                {
+                    _method = method;
+                }
+
+                protected override object InvokeCore(object component, object[] parameters)
+                {
+                    return _method.Invoke(component, parameters);
+                }
+            }
+
+            private sealed class Async : MethodInvoker
+            {
+                private readonly MethodInfo _method;
+
+                public Async(MethodInfo method)
+                {
+                    _method = method;
+                }
+
+                protected override object InvokeCore(object component, object[] parameters)
+                {
+                    // Invoke the method on the ThreadPool, where there is no sync-context.
+                    R(Task.Run(() => R((Task)_method.Invoke(component, parameters))));
+                    return null;
+                }
+
+                private static void R(Task task)
+                {
+                    task.Wait();
+                }
+            }
+
+            private sealed class Async<T> : MethodInvoker
+            {
+                private readonly MethodInfo _method;
+
+                public Async(MethodInfo method)
+                {
+                    _method = method;
+                }
+
+                protected override object InvokeCore(object component, object[] parameters)
+                {
+                    // Invoke the method on the ThreadPool, where there is no sync-context.
+                    return R(Task.Run(() => R((Task<T>)_method.Invoke(component, parameters))));
+                }
+
+                private static T R(Task<T> task)
+                {
+                    return task.Result;
+                }
+            }
         }
 
         #endregion

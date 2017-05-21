@@ -14,6 +14,7 @@
 
 using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using Moq;
 using Xunit;
 using Xunit.Extensions;
@@ -79,20 +80,90 @@ namespace AK.CmdLine.Impl
         }
 
         [Fact]
+        public void can_invoke_void_async_method()
+        {
+            var component = new Mock<VoidAsyncMethod>(MockBehavior.Strict);
+            var descriptor = Describe(component.Object.GetType());
+            component.Setup(x => x.Method(1, "y")).Returns(Task.FromResult(0));
+
+            Assert.Null(descriptor.Invoke(component.Object, new object[] { 1, "y" }));
+
+            component.Verify(x => x.Method(1, "y"), Times.Once());
+        }
+
+        [Fact]
+        public void can_invoke_ref_type_async_method()
+        {
+            var component = new Mock<NonVoidAsyncMethod<string>>(MockBehavior.Strict);
+            var descriptor = Describe(component.Object.GetType());
+            component.Setup(x => x.Method(1, "y")).Returns(Task.FromResult("result"));
+
+            Assert.Equal("result", descriptor.Invoke(component.Object, new object[] { 1, "y" }));
+
+            component.Verify(x => x.Method(1, "y"), Times.Once());
+        }
+
+        [Fact]
+        public void can_invoke_value_type_async_method()
+        {
+            var component = new Mock<NonVoidAsyncMethod<int>>(MockBehavior.Strict);
+            var descriptor = Describe(component.Object.GetType());
+            component.Setup(x => x.Method(1, "y")).Returns(Task.FromResult(42));
+
+            Assert.Equal(42, descriptor.Invoke(component.Object, new object[] { 1, "y" }));
+
+            component.Verify(x => x.Method(1, "y"), Times.Once());
+        }
+
+        [Theory]
+        [InlineData(42)]
+        [InlineData(null)]
+        public void can_invoke_nullable_type_async_method(int? value)
+        {
+            var component = new Mock<NonVoidAsyncMethod<int?>>(MockBehavior.Strict);
+            var descriptor = Describe(component.Object.GetType());
+            component.Setup(x => x.Method(1, "y")).Returns(Task.FromResult(value));
+
+            Assert.Equal(value, descriptor.Invoke(component.Object, new object[] { 1, "y" }));
+
+            component.Verify(x => x.Method(1, "y"), Times.Once());
+        }
+
+        [Fact]
         public void exceptions_are_bubbled_up_from_invoke()
         {
             var component = new ExceptionsAreBubbledUpFromInvoke();
             var descriptor = Describe<ExceptionsAreBubbledUpFromInvoke>();
 
-            Assert.Throws<TargetInvocationException>(() => descriptor.Invoke(component, null));
-            try
-            {
-                descriptor.Invoke(component, null);
-            }
-            catch(TargetInvocationException e)
-            {
-                Assert.IsType<ArgumentException>(e.InnerException);
-            }
+            var actual = Assert.Throws<TargetInvocationException>(() => descriptor.Invoke(component, null));
+
+            Assert.IsType<ArgumentException>(actual.InnerException);
+        }
+
+        [Fact]
+        public void exceptions_are_bubbled_up_from_void_async_invoke()
+        {
+            var component = new Mock<VoidAsyncMethod>(MockBehavior.Strict);
+            var descriptor = Describe(component.Object.GetType());
+            component.Setup(x => x.Method(1, "y")).Returns(Task.FromException<int>(new ArgumentException()));
+
+            var actual = Assert.Throws<TargetInvocationException>(
+                () => descriptor.Invoke(component.Object, new object[] { 1, "y" }));
+
+            Assert.IsType<ArgumentException>(actual.InnerException);
+        }
+
+        [Fact]
+        public void exceptions_are_bubbled_up_from_non_void_async_invoke()
+        {
+            var component = new Mock<NonVoidAsyncMethod<int>>(MockBehavior.Strict);
+            var descriptor = Describe(component.Object.GetType());
+            component.Setup(x => x.Method(1, "y")).Returns(Task.FromException<int>(new ArgumentException()));
+
+            var actual = Assert.Throws<TargetInvocationException>(
+                () => descriptor.Invoke(component.Object, new object[] { 1, "y" }));
+
+            Assert.IsType<ArgumentException>(actual.InnerException);
         }
 
         private static MethodDescriptor Describe<T>()
@@ -116,6 +187,24 @@ namespace AK.CmdLine.Impl
         public class CanInvokeMethod
         {
             public virtual string Method(int x, string y)
+            {
+                // Should be mocked.
+                throw new NotImplementedException();
+            }
+        }
+
+        public class VoidAsyncMethod
+        {
+            public virtual Task Method(int x, string y)
+            {
+                // Should be mocked.
+                throw new NotImplementedException();
+            }
+        }
+
+        public class NonVoidAsyncMethod<TResult>
+        {
+            public virtual Task<TResult> Method(int x, string y)
             {
                 // Should be mocked.
                 throw new NotImplementedException();

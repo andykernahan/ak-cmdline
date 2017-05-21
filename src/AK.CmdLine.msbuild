@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <BuildType Condition="'$(BuildType)'==''">Debug</BuildType>
-    <GlobalAssemblyVersion>1.1.1</GlobalAssemblyVersion>
+    <GlobalAssemblyVersion>1.2.0</GlobalAssemblyVersion>
     <ForcedBuildProperties>Configuration=$(BuildType)</ForcedBuildProperties>
   </PropertyGroup>
 
