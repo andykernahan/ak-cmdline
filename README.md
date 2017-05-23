@@ -1,4 +1,4 @@
-# Command Line Parser Library for .NET 4.0
+# Command Line Parser Library for .NET 4.6
 
 A simple command line processing library which enables the public methods of an object to be invoked via the command line. The library also provides the following features:
 * help information is generated using the program's xmldocs or by decorating members with the `System.ComponentModel.DescriptionAttribute`
@@ -8,6 +8,7 @@ A simple command line processing library which enables the public methods of an 
 * supports positional arguments and multiple switch formats (`--name=value`, `/name=value`, `/name:value`, `/name value`)
 * supports short form boolean switch (`--name[+]`, `--name-`)
 * supports optional parameters
+* supports `async` commands (`Task` and `Task<T>`)
 
 ## Example
 
@@ -15,7 +16,7 @@ Given the following program:
 
 ```c#
 /// <summary>
-/// Wake On LAN utility for .NET 4.
+/// Wake On LAN utility for .NET 4.6.
 /// </summary>
 public class WakeOnLan
 {
