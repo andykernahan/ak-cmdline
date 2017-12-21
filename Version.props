@@ -1,0 +1,15 @@
+<Project>
+
+  <PropertyGroup>
+    <VersionPrefix>1.2.0</VersionPrefix>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
+    <FileVersion>$(AssemblyVersion)</FileVersion>
+    <FileVersion Condition=" '$(BuildNumber)' != '' ">$(FileVersion).$(BuildNumber)</FileVersion>
+    <InformationalVersion>$(FileVersion)</InformationalVersion>
+    <InformationalVersion Condition=" '$(RepoCommit)' != '' ">$(InformationalVersion)-$(RepoCommit)</InformationalVersion>
+  </PropertyGroup>
+
+</Project>

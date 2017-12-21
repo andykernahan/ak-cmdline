@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>AK.CmdLine</AssemblyName>
+    <RootNamespace>AK.CmdLine</RootNamespace>
+    <Description>Command Line Parser Library for .NET.</Description>
+  </PropertyGroup>
+
+</Project>

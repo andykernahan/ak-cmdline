@@ -1,0 +1,23 @@
+<Project>
+
+  <Import Project="build\CI.props" />
+  <Import Project="Version.props" />
+
+  <PropertyGroup>
+    <Authors>Andy Kernahan</Authors>
+    <Copyright>Copyright (c) Andy Kernahan 2011</Copyright>
+    <RepositoryUrl>https://github.com/andykernahan/ak-cmdline</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(OS)' == 'Windows_NT' ">
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)build\Key.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <DefineConstants>$(DefineConstants);SIGN_ASSEMBLY</DefineConstants>
+  </PropertyGroup>
+
+</Project>
