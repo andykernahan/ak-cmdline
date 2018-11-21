@@ -1,0 +1,11 @@
+image: Visual Studio 2017
+configuration: Release
+artifacts:
+  - name: packages
+    path: src\**\*.nupkg
+before_build:
+  - cmd: dotnet restore
+build:
+  verbosity: minimal
+after_build:
+  - cmd: dotnet pack

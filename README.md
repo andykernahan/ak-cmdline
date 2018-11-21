@@ -9,6 +9,8 @@ A simple command line processing library which enables the public methods of an 
 * supports short form boolean switch (`--name[+]`, `--name-`)
 * supports optional parameters
 
+[![Build status](https://ci.appveyor.com/api/projects/status/qnydl722egdubux1?svg=true)](https://ci.appveyor.com/project/andykernahan/ak-cmdline)
+
 ## Example
 
 Given the following program:
