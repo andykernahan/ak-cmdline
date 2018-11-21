@@ -1,0 +1,21 @@
+<Project>
+
+  <Import Project="build\CI.props" />
+  <Import Project="Version.props" />
+
+  <PropertyGroup>
+    <Product>AK.CmdLine</Product>
+    <Authors>Andy Kernahan</Authors>
+    <Copyright>Copyright (c) $(Authors)</Copyright>
+    <RepositoryUrl>https://github.com/andykernahan/ak-cmdline</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryRoot>$(MSBuildThisFileDirectory)</RepositoryRoot>
+    <PackageProjectUrl>$(RepositoryUrl)/blob/master/README.md</PackageProjectUrl>
+    <PackageLicenseUrl>https://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+</Project>

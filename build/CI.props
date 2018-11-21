@@ -1,0 +1,7 @@
+<Project>
+
+  <PropertyGroup>
+    <BuildNumber Condition="'$(BuildNumber)' == ''">$(APPVEYOR_BUILD_NUMBER)</BuildNumber>
+  </PropertyGroup>
+
+</Project>
