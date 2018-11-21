@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <BuildNumber Condition="'$(BuildNumber)' == ''">$(APPVEYOR_BUILD_NUMBER)</BuildNumber>
+    <RepoCommit Condition="'$(RepoCommit)' == ''">$(APPVEYOR_REPO_COMMIT)</RepoCommit>
   </PropertyGroup>
 
 </Project>

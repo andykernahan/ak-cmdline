@@ -2,8 +2,12 @@
 
   <PropertyGroup>
     <VersionPrefix>1.2.0</VersionPrefix>
-    <BuildNumber Condition="'$(BuildNumber)' == ''">local</BuildNumber>
-    <VersionSuffix Condition="'$(VersionSuffix)' != '' And '$(BuildNumber)' != ''">$(VersionSuffix)-$(BuildNumber)</VersionSuffix>
+    <_BuildNumber>$(BuildNumber)</_BuildNumber>
+    <_BuildNumber Condition="$(_BuildNumber) == ''">0</_BuildNumber>    
+    <FileVersion>$(VersionPrefix).$(_BuildNumber)</FileVersion>
+    <InformationalVersion>$(FileVersion)</InformationalVersion>
+    <InformationalVersion Condition="$(VersionSuffix) != ''">$(InformationalVersion)-$(VersionSuffix)</InformationalVersion>
+    <InformationalVersion Condition="$(RepoCommit) != ''">$(InformationalVersion)-$(RepoCommit)</InformationalVersion>
   </PropertyGroup>
 
 </Project>
