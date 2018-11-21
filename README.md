@@ -1,4 +1,4 @@
-# Command Line Parser Library for .NET 4.0
+# Command Line Parser Library for .NET
 
 A simple command line processing library which enables the public methods of an object to be invoked via the command line. The library also provides the following features:
 * help information is generated using the program's xmldocs or by decorating members with the `System.ComponentModel.DescriptionAttribute`
@@ -15,7 +15,7 @@ Given the following program:
 
 ```c#
 /// <summary>
-/// Wake On LAN utility for .NET 4.
+/// Wake On LAN utility for .NET.
 /// </summary>
 public class WakeOnLan
 {
@@ -75,7 +75,7 @@ Yields the following:
 
 ```
 > WakeOnLan.exe
-Wake On LAN utility for .NET 4. - v1.0.0.0
+Wake On LAN utility for .NET. - v1.0.0.0
 Copyright © Andy Kernahan 2011
 
 usage: a command name is required

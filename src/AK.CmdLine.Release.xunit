@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<xunit>
-  <assemblies>
-    <!-- AK.CmdLine.Test.dll -->
-    <assembly filename="AK.CmdLine.Test\bin\Release\AK.CmdLine.Test.dll" shadow-copy="true">
-      <output type="xml" filename="AK.CmdLine.Test.Results.xml" />
-    </assembly>
-  </assemblies>
-</xunit>
