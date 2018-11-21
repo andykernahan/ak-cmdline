@@ -16,6 +16,7 @@ ProjectSection(SolutionItems) = preProject
 	Version.props = Version.props
 	README.md = README.md
 	Directory.Build.props = Directory.Build.props
+	.appveyor.yml = .appveyor.yml
 EndProjectSection
 EndProject
 Global
