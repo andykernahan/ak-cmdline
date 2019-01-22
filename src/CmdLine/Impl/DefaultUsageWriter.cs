@@ -65,7 +65,7 @@ namespace AK.CmdLine.Impl
             Guard.NotNull(method, "method");
             Guard.NotNull(e, "e");
 
-            WriteUsage(method, e.Message);
+            WriteUsage(method, e is ArgumentException ? e.Message : e.ToString());
         }
 
         /// <summary>
