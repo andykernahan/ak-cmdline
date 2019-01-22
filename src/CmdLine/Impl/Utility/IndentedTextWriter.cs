@@ -660,7 +660,7 @@ namespace AK.CmdLine.Impl.Utility
         }
 
         /// <summary>
-        /// Peforms any actions required after a line is written.
+        /// Performs any actions required after a line is written.
         /// </summary>
         protected void PostLineWritten()
         {

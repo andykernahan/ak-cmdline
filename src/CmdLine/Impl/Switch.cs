@@ -39,13 +39,13 @@ namespace AK.CmdLine.Impl
         #region Public Interface.
 
         /// <summary>
-        /// Attemps to parse a <see cref="AK.CmdLine.Impl.Switch"/> from the specified input string
+        /// Attempts to parse a <see cref="AK.CmdLine.Impl.Switch"/> from the specified input string
         /// and returns a value indicating success.
         /// </summary>
         /// <param name="s">The String.</param>
         /// <param name="result">When this methods returns, contains the parsed switch on success,
         /// otherwise; <see langword="null"/>.</param>
-        /// <returns><see langword="true"/> when parsing was successful, otherwide;
+        /// <returns><see langword="true"/> when parsing was successful, otherwise;
         /// <see langword="false"/>.</returns>
         public static bool TryParse(string s, out Switch result)
         {

@@ -49,9 +49,9 @@ namespace AK.CmdLine.Impl
         #region Protected Interface.
 
         /// <summary>
-        /// Gets a descripton of the specified component.
+        /// Gets a description of the specified component.
         /// </summary>
-        /// <returns>A descripton of the component.</returns>
+        /// <returns>A description of the component.</returns>
         protected override string GetComponentDescription()
         {
             var summary = GetMemberSummaryValue(MakeComponentMemberName());
@@ -59,11 +59,11 @@ namespace AK.CmdLine.Impl
         }
 
         /// <summary>
-        /// Gets a descripton of the specified <paramref name="method"/>.
+        /// Gets a description of the specified <paramref name="method"/>.
         /// </summary>
         /// <param name="method">The <see cref="AK.CmdLine.Impl.MethodDescriptor"/>.</param>
         /// <returns>
-        /// A descripton of the specified <paramref name="method"/>.
+        /// A description of the specified <paramref name="method"/>.
         /// </returns>
         protected override string GetDescription(MethodDescriptor method)
         {
@@ -72,11 +72,11 @@ namespace AK.CmdLine.Impl
         }
 
         /// <summary>
-        /// Gets a descripton of the specified <paramref name="parameter"/>.
+        /// Gets a description of the specified <paramref name="parameter"/>.
         /// </summary>
         /// <param name="parameter">The <see cref="AK.CmdLine.Impl.ParameterDescriptor"/>.</param>
         /// <returns>
-        /// A descripton of the specified <paramref name="parameter"/>.
+        /// A description of the specified <paramref name="parameter"/>.
         /// </returns>
         protected override string GetDescription(ParameterDescriptor parameter)
         {

@@ -21,7 +21,7 @@ namespace AK.CmdLine.Impl
     public interface IValueConverter
     {
         /// <summary>
-        /// Attemps to convert the specified <paramref name="value"/> to the specified
+        /// Attempts to convert the specified <paramref name="value"/> to the specified
         /// <paramref name="target"/> <see cref="System.Type"/> and returns a value indicating
         /// success.
         /// </summary>
