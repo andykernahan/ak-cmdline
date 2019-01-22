@@ -26,7 +26,7 @@ namespace AK.CmdLine.Impl
         void Usage();
 
         /// <summary>
-        /// Writes usage information about the specifed exception thrown by the specified
+        /// Writes usage information about the specified exception thrown by the specified
         /// <paramref name="method"/> during invocation.
         /// </summary>
         /// <param name="method">The <see cref="AK.CmdLine.Impl.MethodDescriptor"/> that threw the
@@ -38,12 +38,12 @@ namespace AK.CmdLine.Impl
         void Usage(MethodDescriptor method, Exception e);
 
         /// <summary>
-        /// Writes usuage information indicating that a command name is required.
+        /// Writes usage information indicating that a command name is required.
         /// </summary>
         void CommandNameRequired();
 
         /// <summary>
-        /// Writes usuage information indicating that the specified command <paramref name="name"/>
+        /// Writes usage information indicating that the specified command <paramref name="name"/>
         /// is invalid.
         /// </summary>
         /// <param name="name">The invalid command name.</param>
@@ -56,7 +56,7 @@ namespace AK.CmdLine.Impl
         void InvalidCommandName(string name);
 
         /// <summary>
-        /// Writes usuage information indicating that an invalid number of arguments have provided
+        /// Writes usage information indicating that an invalid number of arguments have provided
         /// for the specified <paramref name="method"/>.
         /// </summary>
         /// <param name="method">The <see cref="AK.CmdLine.Impl.MethodDescriptor"/>.</param>
@@ -66,7 +66,7 @@ namespace AK.CmdLine.Impl
         void InvalidNumberOfArguments(MethodDescriptor method);
 
         /// <summary>
-        /// Writes usuage information indicating that the format specified
+        /// Writes usage information indicating that the format specified
         /// <paramref name="switch"/> is invalid.
         /// </summary>
         /// <param name="switch">The switch.</param>
@@ -79,8 +79,8 @@ namespace AK.CmdLine.Impl
         void InvalidSwitchFormat(string @switch);
 
         /// <summary>
-        /// Writes usuage information indicating that the specified argument
-        /// <paramref name="name"/> is invalid for the specfied <paramref name="method"/>.
+        /// Writes usage information indicating that the specified argument
+        /// <paramref name="name"/> is invalid for the specified <paramref name="method"/>.
         /// </summary>
         /// <param name="method">The <see cref="AK.CmdLine.Impl.MethodDescriptor"/>.</param>
         /// <param name="name">The switch name.</param>
@@ -94,7 +94,7 @@ namespace AK.CmdLine.Impl
         void InvalidArgumentName(MethodDescriptor method, string name);
 
         /// <summary>
-        /// Writes usuage information indicating that the <paramref name="value"/> provided
+        /// Writes usage information indicating that the <paramref name="value"/> provided
         /// for the specified <paramref name="parameter"/> is invalid.
         /// </summary>
         /// <param name="parameter">The <see cref="AK.CmdLine.Impl.ParameterDescriptor"/>.</param>

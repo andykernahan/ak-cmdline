@@ -18,7 +18,7 @@ using System.Collections.Generic;
 namespace AK.CmdLine.Impl.Utility
 {
     /// <summary>
-    /// Provides supporting for breakings strings on whitespace and punctuation into segments of a maximum length.
+    /// Provides supporting for breaking strings on whitespace and punctuation into segments of a maximum length.
     /// </summary>
     public struct StringBreaker : IEnumerable<string>
     {
