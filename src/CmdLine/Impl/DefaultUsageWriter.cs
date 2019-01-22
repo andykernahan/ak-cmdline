@@ -62,7 +62,7 @@ namespace AK.CmdLine.Impl
         /// </exception>
         public virtual void Usage(MethodDescriptor method, Exception e)
         {
-            Guard.NotNull(e, "e");
+            Guard.NotNull(method, "method");
             Guard.NotNull(e, "e");
 
             WriteUsage(method, e.Message);
