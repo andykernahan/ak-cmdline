@@ -95,6 +95,22 @@ namespace AK.CmdLine.Impl.Utility
             get { return Assembly.GetName().Version; }
         }
 
+        /// <summary>
+        /// Gets the assembly file version.
+        /// </summary>
+        public string FileVersion
+        {
+            get { return With<AssemblyFileVersionAttribute>(x => x.Version); }
+        }
+
+        /// <summary>
+        /// Gets the assembly informational version.
+        /// </summary>
+        public string InformationalVersion
+        {
+            get { return With<AssemblyInformationalVersionAttribute>(x => x.InformationalVersion); }
+        }
+
         #endregion
 
         #region Private Impl.

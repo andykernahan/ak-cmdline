@@ -208,9 +208,24 @@ namespace AK.CmdLine.Impl
         /// </summary>
         protected virtual void WriteComponentHeader()
         {
-            Output.WriteLine("{0} - v{1}", GetComponentDescription(), AssemblyInfo.Version);
+            Output.WriteLine("{0} - {1}",
+                GetComponentDescription(),
+                GetComponentVersion());
             Output.WriteLine(AssemblyInfo.Copyright);
             Output.WriteLine();
+
+            object GetComponentVersion()
+            {
+                if (!string.IsNullOrWhiteSpace(AssemblyInfo.InformationalVersion))
+                {
+                    return AssemblyInfo.InformationalVersion;
+                }
+                if (!string.IsNullOrWhiteSpace(AssemblyInfo.FileVersion))
+                {
+                    return AssemblyInfo.FileVersion;
+                }
+                return AssemblyInfo.Version;
+            }
         }
 
         /// <summary>
