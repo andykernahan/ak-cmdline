@@ -15,6 +15,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using AK.CmdLine.Impl.Utility;
 
 namespace AK.CmdLine.Impl
@@ -65,7 +66,7 @@ namespace AK.CmdLine.Impl
             Guard.NotNull(method, "method");
             Guard.NotNull(e, "e");
 
-            WriteUsage(method, e is ArgumentException ? e.Message : e.ToString());
+            WriteUsage(method, Escape(e is ArgumentException ? e.Message : e.ToString()));
         }
 
         /// <summary>
@@ -443,6 +444,14 @@ namespace AK.CmdLine.Impl
                 Output.WriteLine(message, args);
                 Output.WriteLine();
             }
+        }
+
+        private static string Escape(string s)
+        {
+            return new StringBuilder(s)
+                   .Replace("{", "{{")
+                   .Replace("}", "}}")
+                   .ToString();
         }
 
         #endregion

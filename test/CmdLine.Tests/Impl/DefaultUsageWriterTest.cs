@@ -32,6 +32,18 @@ namespace AK.CmdLine.Impl
         {
             Assert.Throws<ArgumentNullException>(() => new DefaultUsageWriter(Describe<Component>(), null));
         }
+        
+        [Theory]
+        [InlineData("{")]
+        [InlineData("}")]
+        [InlineData("{}")]
+        public void write_usage_with_exception_does_not_throw_when_exception_contains_format_tokens(string message)
+        {
+            var sut = new DefaultUsageWriter(TestUtility.ComponentDescriptor, TextWriter.Null);
+            var exception = new Exception(message);
+
+            sut.Usage(TestUtility.MethodDescriptor, exception);
+        }
 
         private ComponentDescriptor Describe<T>()
         {
